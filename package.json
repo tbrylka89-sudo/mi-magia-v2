@@ -4,15 +4,14 @@
   "description": "Mi Magia — Sistema de canalizaciones automaticas para Duendes del Uruguay",
   "private": true,
   "scripts": {
-    "dev": "vercel dev",
-    "build": "echo 'Build complete'",
-    "start": "node api/webhook.js"
+    "dev": "node index.js",
+    "start": "node index.js"
   },
   "dependencies": {
     "@anthropic-ai/sdk": "^0.39.0",
-    "@vercel/postgres": "^0.10.0",
-    "resend": "^4.0.0",
-    "crypto": "^1.0.1"
+    "express": "^4.21.0",
+    "pg": "^8.13.0",
+    "resend": "^4.0.0"
   },
   "engines": {
     "node": ">=18"
