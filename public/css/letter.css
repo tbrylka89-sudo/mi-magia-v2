@@ -1,0 +1,163 @@
+@import url('https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,500;0,600;1,300;1,400&family=Raleway:wght@300;400;500&display=swap');
+
+:root {
+  --cream: #FFFDF7;
+  --gold: #C9A96E;
+  --gold-pale: #E8D9B8;
+  --text-dark: #2D2A26;
+  --text-medium: #5A5347;
+  --text-light: #8A7F72;
+  --text-muted: #B8A88A;
+}
+
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  font-family: 'Cormorant Garamond', Georgia, serif;
+  background: var(--cream);
+  color: var(--text-dark);
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+}
+
+.letter-page {
+  max-width: 640px;
+  margin: 0 auto;
+  padding: 60px 24px 80px;
+}
+
+/* --- Header --- */
+.letter-header {
+  text-align: center;
+  margin-bottom: 50px;
+}
+
+.letter-header__brand {
+  font-family: 'Raleway', sans-serif;
+  font-size: 11px;
+  font-weight: 400;
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-bottom: 24px;
+}
+
+.letter-header__title {
+  font-size: 28px;
+  font-weight: 300;
+  color: var(--text-dark);
+  line-height: 1.3;
+  margin-bottom: 8px;
+}
+
+.letter-header__guardian {
+  color: var(--gold);
+  font-weight: 500;
+  font-style: italic;
+}
+
+.letter-header__for {
+  font-size: 17px;
+  font-weight: 300;
+  color: var(--text-light);
+  font-style: italic;
+}
+
+/* --- Divider --- */
+.letter-divider {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  margin-bottom: 50px;
+}
+
+.letter-divider__line {
+  height: 1px;
+  width: 80px;
+  background: var(--gold-pale);
+}
+
+.letter-divider__symbol {
+  color: var(--gold);
+  font-size: 20px;
+}
+
+/* --- Content --- */
+.letter-content {
+  opacity: 0;
+  animation: letterFadeIn 1.5s ease 0.3s forwards;
+}
+
+@keyframes letterFadeIn {
+  to { opacity: 1; }
+}
+
+.letter-content p {
+  font-size: 19px;
+  font-weight: 400;
+  line-height: 1.9;
+  color: var(--text-medium);
+  margin-bottom: 28px;
+  text-align: justify;
+}
+
+.letter-content p:first-child::first-letter {
+  font-size: 56px;
+  float: left;
+  line-height: 1;
+  padding-right: 8px;
+  color: var(--gold);
+  font-weight: 600;
+}
+
+/* --- Footer --- */
+.letter-footer {
+  text-align: center;
+  margin-top: 60px;
+  padding-top: 40px;
+  border-top: 1px solid var(--gold-pale);
+}
+
+.letter-footer__guardian {
+  font-size: 20px;
+  font-weight: 500;
+  color: var(--gold);
+  font-style: italic;
+  margin-bottom: 8px;
+}
+
+.letter-footer__brand {
+  font-family: 'Raleway', sans-serif;
+  font-size: 10px;
+  font-weight: 400;
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  margin-top: 24px;
+}
+
+/* --- Responsive --- */
+@media (max-width: 480px) {
+  .letter-page {
+    padding: 48px 20px 60px;
+  }
+
+  .letter-header__title {
+    font-size: 24px;
+  }
+
+  .letter-content p {
+    font-size: 17px;
+    line-height: 1.8;
+    text-align: left;
+  }
+
+  .letter-content p:first-child::first-letter {
+    font-size: 44px;
+  }
+}

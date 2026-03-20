@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Carta de Canalizacion — {{guardianName}}</title>
+  <link rel="stylesheet" href="/css/letter.css">
+</head>
+<body>
+
+  <div class="letter-page">
+
+    <header class="letter-header">
+      <p class="letter-header__brand">Duendes del Uruguay</p>
+      <h1 class="letter-header__title">
+        Carta de <span class="letter-header__guardian">{{guardianName}}</span>
+      </h1>
+      <p class="letter-header__for">para {{customerName}}</p>
+    </header>
+
+    <div class="letter-divider">
+      <span class="letter-divider__line"></span>
+      <span class="letter-divider__symbol">&#10043;</span>
+      <span class="letter-divider__line"></span>
+    </div>
+
+    <div class="letter-content">
+      {{letterContent}}
+    </div>
+
+    <footer class="letter-footer">
+      <p class="letter-footer__guardian">— {{guardianName}} —</p>
+      <p class="letter-footer__brand">Duendes del Uruguay</p>
+    </footer>
+
+  </div>
+
+</body>
+</html>

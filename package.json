@@ -1,0 +1,20 @@
+{
+  "name": "mi-magia-v2",
+  "version": "1.0.0",
+  "description": "Mi Magia — Sistema de canalizaciones automaticas para Duendes del Uruguay",
+  "private": true,
+  "scripts": {
+    "dev": "vercel dev",
+    "build": "echo 'Build complete'",
+    "start": "node api/webhook.js"
+  },
+  "dependencies": {
+    "@anthropic-ai/sdk": "^0.39.0",
+    "@vercel/postgres": "^0.10.0",
+    "resend": "^4.0.0",
+    "crypto": "^1.0.1"
+  },
+  "engines": {
+    "node": ">=18"
+  }
+}

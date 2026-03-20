@@ -1,0 +1,16 @@
+{
+  "version": 2,
+  "builds": [
+    { "src": "api/**/*.js", "use": "@vercel/node" },
+    { "src": "public/**", "use": "@vercel/static" }
+  ],
+  "routes": [
+    { "src": "/api/webhook", "dest": "/api/webhook.js" },
+    { "src": "/api/submit-form", "dest": "/api/submit-form.js" },
+    { "src": "/api/validate-form", "dest": "/api/validate-form.js" },
+    { "src": "/api/letter/(.*)", "dest": "/api/letter/[id].js" },
+    { "src": "/form/(.*)", "dest": "/public/form.html" },
+    { "src": "/carta/(.*)", "dest": "/api/letter/[id].js" },
+    { "src": "/(.*)", "dest": "/public/$1" }
+  ]
+}

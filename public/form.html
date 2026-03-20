@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tu Canalizacion — Duendes del Uruguay</title>
+  <link rel="stylesheet" href="/css/form.css">
+</head>
+<body>
+
+  <!-- Error state -->
+  <div class="error-page" id="errorPage">
+    <h2>Este enlace no es valido</h2>
+    <p>Es posible que ya hayas completado tu canalizacion, o que el enlace haya expirado.</p>
+  </div>
+
+  <!-- Main form -->
+  <div id="formPage">
+    <header class="header">
+      <p class="header__brand">Duendes del Uruguay</p>
+      <h1 class="header__title">
+        Tu <span class="header__guardian" id="guardianName">Guardian</span> quiere hablarte
+      </h1>
+      <p class="header__subtitle">
+        Antes, necesita conocer tu momento.<br>
+        Responde desde el corazon.
+      </p>
+    </header>
+
+    <div class="divider">
+      <span class="divider__line"></span>
+      <span class="divider__symbol">&#10043;</span>
+      <span class="divider__line"></span>
+    </div>
+
+    <form class="form-container" id="canalizacionForm">
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta I</p>
+        <label class="question-group__label" for="q1">
+          Si pudieras describir tu momento de vida en una imagen, ¿cual seria?
+        </label>
+        <span class="question-group__hint">No pienses demasiado. La primera imagen que aparezca.</span>
+        <textarea id="q1" name="momento_de_vida" placeholder="Describe lo que ves..." required></textarea>
+      </div>
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta II</p>
+        <label class="question-group__label" for="q2">
+          ¿Que es lo que mas pesa en tu corazon ahora mismo?
+        </label>
+        <span class="question-group__hint">Puede ser una preocupacion, un duelo, una decision pendiente...</span>
+        <textarea id="q2" name="peso_en_el_corazon" placeholder="Lo que necesitas soltar..." required></textarea>
+      </div>
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta III</p>
+        <label class="question-group__label" for="q3">
+          ¿Que deseas profundamente pero todavia no te has atrevido a decir en voz alta?
+        </label>
+        <span class="question-group__hint">Este es un espacio seguro. Tu guardian no juzga.</span>
+        <textarea id="q3" name="deseo_profundo" placeholder="Aqui puedes decirlo..." required></textarea>
+      </div>
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta IV</p>
+        <label class="question-group__label" for="q4">
+          ¿Que relacion o vinculo esta transformandose en tu vida?
+        </label>
+        <span class="question-group__hint">Con una persona, con vos misma, con tu trabajo, con un lugar...</span>
+        <textarea id="q4" name="relacion_en_transformacion" placeholder="Cuenta sobre ese cambio..." required></textarea>
+      </div>
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta V</p>
+        <label class="question-group__label" for="q5">
+          Cuando elegiste a tu guardian, ¿que sentiste? ¿Por que ese y no otro?
+        </label>
+        <span class="question-group__hint">La eleccion nunca es casualidad.</span>
+        <textarea id="q5" name="eleccion_del_guardian" placeholder="Lo que sentiste al verlo..." required></textarea>
+      </div>
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta VI</p>
+        <label class="question-group__label" for="q6">
+          ¿Que necesitas escuchar ahora mismo? ¿Que palabras sanarian algo en ti?
+        </label>
+        <span class="question-group__hint">A veces sabemos exactamente lo que necesitamos oir.</span>
+        <textarea id="q6" name="palabras_que_necesitas" placeholder="Las palabras que buscas..." required></textarea>
+      </div>
+
+      <div class="question-group">
+        <p class="question-group__number">Pregunta VII</p>
+        <label class="question-group__label" for="q7">
+          ¿Hay algo mas que quieras compartir con tu guardian?
+        </label>
+        <span class="question-group__hint">Cualquier cosa. Un sueno, un recuerdo, un miedo, una esperanza.</span>
+        <textarea id="q7" name="mensaje_libre" placeholder="Espacio libre para ti..."></textarea>
+      </div>
+
+      <div class="submit-section">
+        <p class="submit-section__message">
+          Cuando estes lista, envia tus palabras.<br>
+          Tu guardian las recibira.
+        </p>
+        <button type="submit" class="submit-btn" id="submitBtn">
+          Enviar al guardian
+        </button>
+      </div>
+
+    </form>
+  </div>
+
+  <!-- Loading overlay -->
+  <div class="loading-overlay" id="loadingOverlay">
+    <div class="loading-spinner"></div>
+    <p class="loading-overlay__text">Tu guardian esta leyendo tus palabras...</p>
+    <p class="loading-overlay__sub">Esto puede tomar un momento. No cierres esta pagina.</p>
+  </div>
+
+  <!-- Success state -->
+  <div class="success-message" id="successMessage">
+    <h2>Tu guardian ha hablado</h2>
+    <p>
+      Tu carta de canalizacion esta siendo preparada.<br>
+      La recibiras en tu email en unos momentos.<br><br>
+      <em>Gracias por abrir tu corazon.</em>
+    </p>
+  </div>
+
+  <script src="/js/form.js"></script>
+</body>
+</html>
