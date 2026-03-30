@@ -18,3 +18,4 @@
     { "path": "/api/cron/post-delivery-emails", "schedule": "0 10 * * *" }
   ]
 }
+
