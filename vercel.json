@@ -12,5 +12,9 @@
     { "src": "/form/(.*)", "dest": "/public/form.html" },
     { "src": "/carta/(.*)", "dest": "/api/letter/[id].js" },
     { "src": "/(.*)", "dest": "/public/$1" }
+  ],
+  "crons": [
+    { "path": "/api/cron/ritual-emails", "schedule": "0 9 * * *" },
+    { "path": "/api/cron/post-delivery-emails", "schedule": "0 10 * * *" }
   ]
 }
