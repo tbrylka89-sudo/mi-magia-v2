@@ -20,14 +20,21 @@ module.exports = async function handler(req, res) {
   const rawBody = Buffer.concat(chunks).toString("utf8");
   const body = JSON.parse(rawBody);
 
-  // Verify Shopify webhook signature
+  // Identify store first to pick correct secret
+  const shopDomain = req.headers["x-shopify-shop-domain"] || "";
   const hmac = req.headers["x-shopify-hmac-sha256"];
-  if (!verifyWebhook(rawBody, hmac, process.env.SHOPIFY_WEBHOOK_SECRET)) {
-    console.error("Invalid webhook signature");
+
+  // Try both secrets (US primary, UY fallback)
+  const secrets = [
+    process.env.SHOPIFY_WEBHOOK_SECRET,
+    process.env.SHOPIFY_WEBHOOK_SECRET_UY,
+  ].filter(Boolean);
+
+  const verified = secrets.some((s) => verifyWebhook(rawBody, hmac, s));
+  if (!verified) {
+    console.error("Invalid webhook signature from", shopDomain);
     return res.status(401).json({ error: "Invalid signature" });
   }
-
-  const shopDomain = req.headers["x-shopify-shop-domain"] || "";
   const store = identifyStore(shopDomain);
 
   if (store === "unknown") {
