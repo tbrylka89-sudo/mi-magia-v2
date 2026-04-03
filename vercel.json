@@ -48,6 +48,10 @@
       "dest": "/api/my-orders.js"
     },
     {
+      "src": "/api/admin-seed",
+      "dest": "/api/admin-seed.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }
