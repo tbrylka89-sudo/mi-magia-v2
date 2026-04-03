@@ -44,6 +44,10 @@
       "dest": "/api/letter/[id].js"
     },
     {
+      "src": "/api/my-orders",
+      "dest": "/api/my-orders.js"
+    },
+    {
       "src": "/(.*)",
       "dest": "/public/$1"
     }

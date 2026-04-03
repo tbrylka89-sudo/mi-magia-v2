@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Mi Magia — Duendes del Uruguay</title>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Lato:wght@300;400&display=swap" rel="stylesheet">
+  <style>
+    *{box-sizing:border-box;margin:0;padding:0}
+    :root{--gold:#C6A55A;--gold-lt:#D6BD7B;--gold-dk:#A38640;--black:#080a06;--cream:#FFFDF7;--text:#2D2A26;--text-lt:#5A5347;--serif:'Cormorant Garamond',Georgia,serif;--sans:'Lato',Helvetica,sans-serif}
+    body{background:var(--black);color:var(--cream);font-family:var(--sans);min-height:100vh;overflow-x:hidden;-webkit-font-smoothing:antialiased}
+
+    /* Fireflies */
+    .firefly{position:fixed;border-radius:50%;pointer-events:none;z-index:1;opacity:0;will-change:transform,opacity}
+    .firefly--gold{background:radial-gradient(circle,rgba(198,165,90,.5),transparent 70%)}
+    .firefly--green{background:radial-gradient(circle,rgba(74,93,58,.4),transparent 70%)}
+
+    /* Gate */
+    .gate{display:flex;flex-direction:column;align-items:center;justify-content:center;min-height:100vh;text-align:center;padding:40px 24px;position:relative;z-index:2}
+    .gate__brand{font-family:var(--serif);font-size:13px;letter-spacing:4px;text-transform:uppercase;color:var(--gold-dk);margin-bottom:40px}
+    .gate__sigil{width:120px;height:120px;border:1px solid rgba(198,165,90,.15);border-radius:50%;display:flex;align-items:center;justify-content:center;font-size:40px;color:rgba(198,165,90,.3);margin-bottom:32px;animation:pulse 4s ease-in-out infinite}
+    @keyframes pulse{0%,100%{transform:scale(.97);opacity:.6}50%{transform:scale(1.03);opacity:1}}
+    .gate__title{font-family:var(--serif);font-size:clamp(32px,6vw,48px);font-weight:300;color:var(--cream);margin-bottom:12px}
+    .gate__title span{background:linear-gradient(90deg,var(--gold) 30%,#fff 50%,var(--gold) 70%);background-size:200% auto;-webkit-background-clip:text;-webkit-text-fill-color:transparent;background-clip:text;animation:shimmer 4s ease-in-out infinite}
+    @keyframes shimmer{0%{background-position:-200% center}100%{background-position:200% center}}
+    .gate__sub{font-size:15px;color:rgba(255,255,255,.45);max-width:420px;line-height:1.7;margin-bottom:40px}
+    .gate__form{width:100%;max-width:360px}
+    .gate__input{width:100%;padding:16px 20px;border:1px solid rgba(198,165,90,.25);border-radius:10px;background:rgba(255,255,255,.04);color:#fff;font-family:var(--sans);font-size:15px;outline:none;transition:border-color .3s;text-align:center}
+    .gate__input:focus{border-color:var(--gold)}
+    .gate__input::placeholder{color:rgba(255,255,255,.2)}
+    .gate__btn{width:100%;margin-top:16px;padding:16px;background:var(--gold);color:#080a06;border:none;border-radius:10px;font-family:var(--serif);font-size:14px;font-weight:600;letter-spacing:2px;text-transform:uppercase;cursor:pointer;transition:all .3s;position:relative;overflow:hidden}
+    .gate__btn:hover{box-shadow:0 4px 24px rgba(198,165,90,.4)}
+    .gate__btn:disabled{opacity:.5;cursor:wait}
+    .gate__error{margin-top:16px;color:#c66;font-size:13px;display:none}
+    .gate__error.show{display:block}
+    .gate__hint{margin-top:24px;font-size:12px;color:rgba(255,255,255,.2);font-style:italic}
+
+    /* Dashboard */
+    .dash{display:none;min-height:100vh;padding:60px 24px 80px;position:relative;z-index:2}
+    .dash.active{display:block}
+    .dash__header{text-align:center;margin-bottom:48px}
+    .dash__welcome{font-family:var(--serif);font-size:13px;letter-spacing:3px;text-transform:uppercase;color:var(--gold-dk);margin-bottom:8px}
+    .dash__name{font-family:var(--serif);font-size:clamp(28px,5vw,40px);font-weight:300;color:var(--cream)}
+    .dash__name span{color:var(--gold)}
+    .dash__sub{font-size:14px;color:rgba(255,255,255,.35);margin-top:8px}
+
+    .dash__grid{max-width:700px;margin:0 auto;display:flex;flex-direction:column;gap:20px}
+    .card{background:rgba(255,255,255,.03);border:1px solid rgba(198,165,90,.12);border-radius:16px;padding:28px 24px;transition:all .3s}
+    .card:hover{border-color:rgba(198,165,90,.3);transform:translateY(-2px)}
+    .card__guardian{font-family:var(--serif);font-size:22px;font-weight:400;color:var(--gold);margin-bottom:4px}
+    .card__date{font-size:12px;color:rgba(255,255,255,.3);margin-bottom:16px}
+    .card__status{display:inline-block;padding:6px 14px;border-radius:20px;font-size:11px;letter-spacing:1px;text-transform:uppercase;font-weight:600}
+    .card__status--pending{background:rgba(198,165,90,.1);color:var(--gold)}
+    .card__status--ready{background:rgba(74,93,58,.15);color:#8BAA6A}
+    .card__status--form{background:rgba(198,165,90,.08);color:var(--gold-dk)}
+    .card__actions{margin-top:16px;display:flex;gap:12px;flex-wrap:wrap}
+    .card__link{display:inline-block;padding:10px 24px;border:1px solid rgba(198,165,90,.3);border-radius:8px;color:var(--gold);font-family:var(--serif);font-size:13px;letter-spacing:1px;text-decoration:none;transition:all .3s}
+    .card__link:hover{background:rgba(198,165,90,.1);border-color:var(--gold)}
+    .card__link--primary{background:var(--gold);color:#080a06;border-color:var(--gold);font-weight:600}
+    .card__link--primary:hover{box-shadow:0 4px 20px rgba(198,165,90,.3)}
+
+    .dash__empty{text-align:center;padding:60px 20px}
+    .dash__empty p{color:rgba(255,255,255,.4);font-size:15px;line-height:1.7;margin-bottom:24px}
+    .dash__empty a{color:var(--gold);text-decoration:underline;text-underline-offset:4px}
+
+    .dash__footer{text-align:center;margin-top:48px;padding-top:32px;border-top:1px solid rgba(198,165,90,.08)}
+    .dash__footer a{color:rgba(255,255,255,.25);font-size:12px;text-decoration:none;letter-spacing:1px}
+    .dash__footer a:hover{color:var(--gold)}
+
+    .dash__logout{display:inline-block;margin-top:16px;color:rgba(255,255,255,.2);font-size:12px;cursor:pointer;border:none;background:none;text-decoration:underline;text-underline-offset:3px}
+    .dash__logout:hover{color:rgba(255,255,255,.5)}
+
+    @media(max-width:500px){
+      .card__actions{flex-direction:column}
+      .card__link{text-align:center}
+    }
+  </style>
+</head>
+<body>
+
+  <!-- Fireflies -->
+  <div id="fireflies" style="position:fixed;inset:0;pointer-events:none;z-index:0;overflow:hidden"></div>
+
+  <!-- Gate (login) -->
+  <div class="gate" id="gate">
+    <p class="gate__brand">Duendes del Uruguay</p>
+    <div class="gate__sigil">✦</div>
+    <h1 class="gate__title"><span>Mi Magia</span></h1>
+    <p class="gate__sub">Tu portal personal. Accede a tus canalizaciones, cartas de tus guardianes, y todo lo que el universo tiene para vos.</p>
+    <div class="gate__form">
+      <input type="email" class="gate__input" id="emailInput" placeholder="Tu email de compra..." autocomplete="email">
+      <button class="gate__btn" id="enterBtn">INGRESAR A MI PORTAL</button>
+      <p class="gate__error" id="gateError">No encontramos canalizaciones con ese email. Verifica que sea el mismo que usaste en tu compra.</p>
+      <p class="gate__hint">Usa el mismo email con el que adoptaste tu guardian</p>
+    </div>
+  </div>
+
+  <!-- Dashboard -->
+  <div class="dash" id="dash">
+    <div class="dash__header">
+      <p class="dash__welcome">Portal Personal</p>
+      <h1 class="dash__name">Bienvenida, <span id="customerName"></span></h1>
+      <p class="dash__sub">Tus guardianes y canalizaciones</p>
+    </div>
+    <div class="dash__grid" id="ordersGrid"></div>
+    <div class="dash__footer">
+      <a href="https://duendesdeluruguay.com/collections/todos-los-guardianes">Explorar mas guardianes →</a>
+      <br>
+      <button class="dash__logout" id="logoutBtn">Cerrar sesion</button>
+    </div>
+  </div>
+
+<script>
+(function(){
+  // Fireflies
+  var fc = document.getElementById('fireflies');
+  function spawnFirefly(){
+    var el = document.createElement('div');
+    el.className = 'firefly ' + (Math.random()>.5?'firefly--gold':'firefly--green');
+    var s = 4+Math.random()*10;
+    el.style.width=s+'px';el.style.height=s+'px';
+    el.style.left=Math.random()*100+'%';el.style.top=Math.random()*100+'%';
+    var d=3+Math.random()*5;
+    el.style.transition='opacity '+d+'s,transform '+d+'s';
+    fc.appendChild(el);
+    requestAnimationFrame(function(){
+      el.style.opacity=(0.1+Math.random()*0.4)+'';
+      el.style.transform='translate('+(Math.random()*80-40)+'px,'+(Math.random()*60-30)+'px)';
+    });
+    setTimeout(function(){
+      el.style.opacity='0';
+      setTimeout(function(){if(el.parentNode)el.parentNode.removeChild(el)},d*1000);
+    },d*1000);
+  }
+  setInterval(spawnFirefly,800);
+
+  var gate=document.getElementById('gate');
+  var dash=document.getElementById('dash');
+  var emailInput=document.getElementById('emailInput');
+  var enterBtn=document.getElementById('enterBtn');
+  var gateError=document.getElementById('gateError');
+  var ordersGrid=document.getElementById('ordersGrid');
+  var customerNameEl=document.getElementById('customerName');
+  var logoutBtn=document.getElementById('logoutBtn');
+
+  // Check saved session
+  var saved = localStorage.getItem('mi-magia-email');
+  if(saved) loadDashboard(saved);
+
+  enterBtn.addEventListener('click', function(){
+    var email = emailInput.value.trim();
+    if(!email||!email.includes('@')){emailInput.style.borderColor='#c44';return;}
+    loadDashboard(email);
+  });
+
+  emailInput.addEventListener('keydown', function(e){
+    if(e.key==='Enter'){enterBtn.click();}
+  });
+
+  logoutBtn.addEventListener('click', function(){
+    localStorage.removeItem('mi-magia-email');
+    dash.classList.remove('active');
+    gate.style.display='';
+    emailInput.value='';
+    gateError.classList.remove('show');
+  });
+
+  function loadDashboard(email){
+    enterBtn.disabled=true;
+    enterBtn.textContent='BUSCANDO...';
+    gateError.classList.remove('show');
+
+    fetch('/api/my-orders',{
+      method:'POST',
+      headers:{'Content-Type':'application/json'},
+      body:JSON.stringify({email:email})
+    })
+    .then(function(r){return r.json()})
+    .then(function(data){
+      enterBtn.disabled=false;
+      enterBtn.textContent='INGRESAR A MI PORTAL';
+
+      if(!data.found){
+        gateError.classList.add('show');
+        localStorage.removeItem('mi-magia-email');
+        return;
+      }
+
+      localStorage.setItem('mi-magia-email', email);
+      gate.style.display='none';
+      dash.classList.add('active');
+
+      var name = data.customerName.split(' ')[0];
+      customerNameEl.textContent = name;
+
+      var html = '';
+      data.orders.forEach(function(o){
+        var dateStr = new Date(o.date).toLocaleDateString('es-UY',{day:'numeric',month:'long',year:'numeric'});
+        html += '<div class="card">';
+        html += '<h3 class="card__guardian">' + o.guardianName + '</h3>';
+        html += '<p class="card__date">Canalizado el ' + dateStr + '</p>';
+
+        if(o.letterReady && o.letterUrl){
+          html += '<span class="card__status card__status--ready">Carta lista</span>';
+          html += '<div class="card__actions">';
+          html += '<a href="'+o.letterUrl+'" class="card__link card__link--primary">Leer mi carta</a>';
+          html += '</div>';
+        } else if(o.formCompleted){
+          html += '<span class="card__status card__status--pending">Generando carta...</span>';
+          html += '<div class="card__actions">';
+          html += '<p style="font-size:13px;color:rgba(255,255,255,.35);font-style:italic">Tu guardian esta canalizando tu carta. Recibiras un email cuando este lista.</p>';
+          html += '</div>';
+        } else if(o.formUrl){
+          html += '<span class="card__status card__status--form">Esperando tus respuestas</span>';
+          html += '<div class="card__actions">';
+          html += '<a href="'+o.formUrl+'" class="card__link card__link--primary">Completar canalizacion</a>';
+          html += '</div>';
+        }
+
+        html += '</div>';
+      });
+
+      if(!data.orders.length){
+        html = '<div class="dash__empty"><p>Todavia no tenes canalizaciones.<br>Cuando adoptes un guardian, aca vas a encontrar todo.</p><a href="https://duendesdeluruguay.com/collections/todos-los-guardianes">Explorar guardianes</a></div>';
+      }
+
+      ordersGrid.innerHTML = html;
+    })
+    .catch(function(){
+      enterBtn.disabled=false;
+      enterBtn.textContent='INGRESAR A MI PORTAL';
+      gateError.textContent='Error de conexion. Intenta de nuevo.';
+      gateError.classList.add('show');
+    });
+  }
+})();
+</script>
+</body>
+</html>
